@@ -7,7 +7,7 @@ $title=$_REQUEST["title"];
 if(!isset($action))
 {
 	echo'<form action="" method="GET">
-	<input type="text" name="title" value="" style="width:400px;">
+	<input type="text" name="title" value="" placeholder="Enter Seed Keyword or Topic Title for ideas" style="width:400px;">
 	<input type="hidden" name="action" value="ideas">
 	<input type="submit" name="submit" value="Generate Ideas">
 	</form>';
