@@ -4,6 +4,15 @@ ini_set("display_errors","On");
 $action = $_REQUEST["action"];
 $title=$_REQUEST["title"];
 
+if(!isset($action))
+{
+	echo'<form action="" method="GET">
+	<input type="text" name="title" value="" style="width:400px;">
+	<input type="hidden" name="action" value="ideas">
+	<input type="submit" name="submit" value="Generate Ideas">
+	</form>';
+}
+
 if($action=="ideas")
 {
 $curl = curl_init();
@@ -18,7 +27,7 @@ curl_setopt_array($curl, array(
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
   CURLOPT_POSTFIELDS =>'{ "contents":[{
-            "parts":[{"text": "'.$prompt.' using this JSON schema: \\{ \\"type\\": \\"array\\", \\"properties\\": \\{ \\"topic\\": \\{ \\"type\\": \\"string\\" \\},\\"summary\\": \\{ \\"type\\": \\"string\\" \\},\\}\\}"}] }],
+            "parts":[{"text": "Create 5 blog ideas on topic - '.$title.' using this JSON schema: \\{ \\"type\\": \\"array\\", \\"properties\\": \\{ \\"topic\\": \\{ \\"type\\": \\"string\\" \\},\\"summary\\": \\{ \\"type\\": \\"string\\" \\},\\}\\}"}] }],
           "generationConfig": {
             "response_mime_type": "application/json",
           } }',
@@ -38,12 +47,10 @@ $topics = json_decode($topics);
 //var_dump($json->candidates[0]->content->parts[0]->text);
 
 echo'<div style="width:600px;">';
-echo"<h1>",$prompt,"</h1>";
+echo"<h1>",$title,"</h1>";
 
 foreach ($topics as $t)
 {
-	$prompt="Prepare blog post outline for topic ".$t->topic." and include summary of points to cover on each subtopic";
-	
 	echo"<h2>",$t->topic,"</h2>";
 	echo"<p style='text-align:justify;'>",$t->summary,"</p>";
 	echo"<a href='?title=$t->topic&action=outline'>View Outline</a>";
