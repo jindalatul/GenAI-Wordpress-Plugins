@@ -1,0 +1,5 @@
+<?php
+$str= '[{"subtopic": "AI-Driven Personalization","subtopic_summary": "Discuss how AI algorithms analyze user data to deliver tailored experiences, enhancing engagement and conversions."},{"subtopic": "Automated Marketing Tasks","subtopic_summary": "Examine the use of AI for automating tasks like email marketing, social media scheduling, and content creation, freeing marketers to focus on strategy."},{"subtopic": "Predictive Analytics","subtopic_summary": "Explain how AI-powered analytics provide insights into customer behavior, enabling marketers to anticipate needs and optimize campaigns."},{"subtopic": "Chatbots and Conversational Marketing","subtopic_summary": "Highlight the role of AI-powered chatbots in providing instant customer support, gathering feedback, and driving conversions."},{"subtopic": "Ethical Considerations in AI Marketing","subtopic_summary": "Address the ethical implications of using AI in marketing, including data privacy, bias, and transparency."}]';
+
+echo addslashes($str);
+?>

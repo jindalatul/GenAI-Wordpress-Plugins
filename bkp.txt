@@ -1,0 +1,48 @@
+function GetBlogPostIdeas($title)
+{
+    die();
+    $prompt = "Generate 5 blog ideas on topic ".$title." ";
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyCbKNDKE9aVwWdnNCYn-czSZn1pkHsyegM',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'POST',
+      CURLOPT_POSTFIELDS =>'{ "contents":[{
+            "parts":[{"text": "'.$prompt.' with outlines and include summary of points to cover on each subtopic using this JSON schema: \\\\{ \'type\': \'array\', 
+            \'properties\': 
+            \\\\{ \'topic\': \\\\{ \'type\': \'string\' \\\\},
+            \'summary\': \\\\{ \'type\': \'string\' \\\\},
+            \'outline\':\\\\{\'type\': \'array\',
+                        \'properties\':
+                        \\\\{ \'subtopic\': \\\\{ \'type\': \'string\' \\\\},
+                        \'subtopic_summary\': \\\\{ \'type\': \'string\' \\\\},
+            \\\\}\\\\}"}]}],
+          "generationConfig": {
+            "response_mime_type": "application/json"
+          } }',
+      CURLOPT_HTTPHEADER => array(
+        'Content-Type: application/json'
+      ),
+    ));
+    
+    $response = curl_exec($curl);
+
+    $json = json_decode($response);
+    
+    $topics = $json->candidates[0]->content->parts[0]->text;
+    echo $topics;
+
+    /*
+    $topics = json_decode($topics);
+    var_dump($topics);
+    */
+
+    curl_close($curl);
+}
